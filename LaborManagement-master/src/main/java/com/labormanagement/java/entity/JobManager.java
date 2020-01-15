@@ -13,7 +13,7 @@ public class JobManager {
 	
 	private String description;
 	
-	private double amount;
+	private double amout;
 	
 	@OneToOne
 	private JobWorkload workload;
@@ -24,7 +24,7 @@ public class JobManager {
 	
 	public JobManager(String jobCode, String description, double amount) {
 		this.jobCode = jobCode;
-		this.amount = amount;
+		this.amout = amount;
 		this.description  =description;
 	}
 
@@ -53,11 +53,11 @@ public class JobManager {
 	}
 
 	public double getAmout() {
-		return amount;
+		return amout;
 	}
 
 	public void setAmout(double amout) {
-		this.amount = amout;
+		this.amout = amout;
 	}
 
 	public JobWorkload getWorkload() {

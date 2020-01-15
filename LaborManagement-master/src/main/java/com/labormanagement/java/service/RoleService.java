@@ -6,75 +6,49 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.labormanagement.java.entity.Role;
-import com.labormanagement.java.entity.User;
-import com.labormanagement.reposit.RoleRepository;
+import com.labormanagement.java.reposit.RoleRepository;
 
-
-	@Service
-	public class RoleService {
-
-		@Autowired
-		private RoleRepository RoleRepository;
-
-		public Role findById(long id) {
-
-			Role role = RoleRepository.findById(id).orElse(null);
-
-			return role;
-		}
+@Service
+public class RoleService {
 	
-		
-		public List<Role> findAll(){
-
-			return (List<Role>) RoleRepository.findAll();
-
-		}
-
-		
-
-		public void createRole(Role role) {
-
-			RoleRepository.save(role);
-
-		}
-
-		
-
-		public void deleteRoleById(long id) {
-
-			Role role = findById(id);
-
-			if(role == null) {
-
-				return;
-
-			}
-
-			RoleRepository.delete(role);
-
-		}
-
-		
-
-		public void deleteAll() {
-
-			RoleRepository.deleteAll();
-
-		}
-
-		
-
-		public void updateRole(Role role) {
-
-			Role role2 = RoleRepository.findById(role.getRoleId()).orElse(null);
-
-			if(role2 != null) {
-
-				RoleRepository.save(role);
-
-			}
-
-		}
-
+	@Autowired
+	private RoleRepository roleRepository;
 	
+	public void createRole(Role role) {
+		roleRepository.save(role);
+	}
+	
+	public Role findById(long id) {
+		Role role = roleRepository.findById(id).orElse(null);
+		return role;
+	}
+	
+	public Role findByName(String name){
+		Iterable<Role> rolesIterable = roleRepository.findAll();
+		for(Role role : rolesIterable) {
+			if(role.getName().equals(name)) {
+				return role;
+			}
+		}
+		return null;
+	}
+	
+	public List<Role> findAll(){
+		return (List<Role>) roleRepository.findAll();
+	}
+	
+	public void updateRole(Role role) {
+		Role role2 = roleRepository.findById(role.getRoleId()).orElse(null);
+		if(role2 != null) {
+			roleRepository.save(role);
+		}
+	}
+	
+	public void deleteById(long roleId) {
+		roleRepository.deleteById(roleId);
+	}
+	
+	public void deleteAll() {
+		roleRepository.deleteAll();
+	}
 }

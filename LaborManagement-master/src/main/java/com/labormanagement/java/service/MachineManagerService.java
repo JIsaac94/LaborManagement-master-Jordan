@@ -1,33 +1,44 @@
 package com.labormanagement.java.service;
 
-import com.labormanagement.java.entity.Role;
-import com.labormanagement.reposit.MachineManagerRepository;
+import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.labormanagement.java.entity.MachineManager;
+import com.labormanagement.java.reposit.MachineManagerRepository;
+
+@Service
 public class MachineManagerService {
- public MachineManagerService() {
-	 
-	 
-	 
-	 public void createMachineManager(MachineManager machinemanager) {
-
-			MachineManagerRepository.save(machinemanager);
-
-			
-			
-	public void deleteMachineManagerById(long id) {
-
-				Role machinemanageRole = MachineManager(id);
-
-				if(machinemanageRole == null) {
-
-					return;
-
-				}
-
-				MachineManagerRepository.delete(machinemanager);
-
-			}
+	
+	@Autowired
+	MachineManagerRepository machineManagerRepository;
+	
+	public void createMachineManager(MachineManager machienManager) {
+		machineManagerRepository.save(machienManager);
+	}
+	
+	public MachineManager findById(long id) {
+		MachineManager machineManager = machineManagerRepository.findById(id).orElse(null);
+		return machineManager;
+	}
+	
+	public List<MachineManager> findAll(){
+		return (List<MachineManager>) machineManagerRepository.findAll();
+	}
+	
+	public void updateMachineManager(MachineManager machineManager) {
+		MachineManager machineManager2 = machineManagerRepository.findById(machineManager.getMachineId()).orElse(null);
+		if(machineManager2 != null) {
+			machineManagerRepository.save(machineManager2);
 		}
-
-}
+	}
+	
+	public void deleteById(long id) {
+		machineManagerRepository.deleteById(id);
+	}
+	
+	public void deleteAll() {
+		machineManagerRepository.deleteAll();
+	}
 }
